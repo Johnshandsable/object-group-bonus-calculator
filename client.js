@@ -33,20 +33,24 @@ const employees = [
 
 function employeeFunc(employee) {
   console.log('inside employeeFunc.');
-  const employeeData = [
-      {
-        name: person.name, 
-        employeeNumber: person.employeeNumber,
-        annualSalary: person.annualSalary,
-        reviewRating: person.reviewRating,
-      }
-  ];
-
-  /
+  let employeeArray = [];
 
   for (const person of employee) {
-    console.log(person);
+    let employeeData = {
+      name: person.name,
+      employeeNumber: person.employeeNumber,
+      annualSalary: person.annualSalary,
+      reviewRating: person.reviewRating,
+    };
+    employeeArray.push(employeeData);
   }
+  return employeeArray;
+}
+
+console.log(employeeFunc(employees));
+
+function employeeBonus(employeez) {
+  console.log('inside employeeBonus');
 }
 
 // YOU SHOULD NOT NEED TO CHANGE ANYTHING ABOVE THIS POINT
