@@ -42,8 +42,8 @@ function employeeFunc(employee) {
     let employeeData = {
       name: person.name,
       bonusPercentage: calcBonusPercentage(person),
-      totalCompensation: 0,
-      totalBonus: 0,
+      totalBonus: calcTotalBonus(person),
+      totalCompensation: calcTotalCompensation(person),
     };
     employeeArray.push(employeeData);
   }
@@ -82,11 +82,11 @@ function calcBonusPercentage(person) {
 // - No bonus can be above 13% or below 0% total.
 
 function calcTotalCompensation(person) {
-  // (base annual + bonus)
+  // person.annualSalary + person.totalBonus
 }
 
 function calcTotalBonus(person) {
-  //
+  // person.bonusPercentage * person.annualSalary
 }
 
 // YOU SHOULD NOT NEED TO CHANGE ANYTHING ABOVE THIS POINT
