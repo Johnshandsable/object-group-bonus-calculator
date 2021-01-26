@@ -56,9 +56,7 @@ function calcBonusPercentage(person) {
   console.log('inside employeeBonus');
   // reviewRating
   let bonus = 1;
-  if (person.reviewRating < 2) {
-    bonus += 0.0; // this is going to be the bonus the person receives.
-  } else if (person.reviewRating === 3) {
+  if (person.reviewRating === 3) {
     bonus += 0.04;
   } else if (person.reviewRating === 4) {
     bonus += 0.06;
