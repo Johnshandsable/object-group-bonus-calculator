@@ -81,9 +81,13 @@ function calcBonusPercentage(person) {
 // However, if their annual income is greater than $65,000, they should have their bonus adjusted down 1%.
 // - No bonus can be above 13% or below 0% total.
 
-function calcTotalCompensation(person) {}
+function calcTotalCompensation(person) {
+  // (base annual + bonus)
+}
 
-function calcTotalBonus(person) {}
+function calcTotalBonus(person) {
+  //
+}
 
 // YOU SHOULD NOT NEED TO CHANGE ANYTHING ABOVE THIS POINT
 
