@@ -41,7 +41,7 @@ function employeeFunc(employee) {
 
     let employeeData = {
       name: person.name,
-      bonusPercentage: 0,
+      bonusPercentage: calcBonusPercentage(person),
       totalCompensation: 0,
       totalBonus: 0,
     };
@@ -55,8 +55,33 @@ console.log(employeeFunc(employees));
 function calcBonusPercentage(person) {
   console.log('inside employeeBonus');
   // reviewRating
-  if (person.reviewRating )
+  let bonus = 1;
+  if (person.reviewRating < 2) {
+    bonus += 0.0; // this is going to be the bonus the person receives.
+  } else if (person.reviewRating === 3) {
+    bonus += 0.04;
+  } else if (person.reviewRating === 4) {
+    bonus += 0.06;
+  } else if (person.reviewRating === 5) {
+    bonus += 0.1;
+  }
+
+  if (person.employeeNumber.length) {
+    bonus += 0.05;
+  }
+
+  if (Number(person.annualSalary) > 65000) {
+    bonus -= 0.01;
+  }
+
+  if (bonus < 1 || bonus >= 1.13) {
+    bonus = 1;
+  }
+  return bonus;
 }
+
+// However, if their annual income is greater than $65,000, they should have their bonus adjusted down 1%.
+// - No bonus can be above 13% or below 0% total.
 
 function calcTotalCompensation(person) {}
 
