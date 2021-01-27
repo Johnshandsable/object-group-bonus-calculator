@@ -47,12 +47,18 @@ function employeeFunc(employee) {
   for (const person of employee) {
     console.log();
     console.log(person);
-    let employeeValues = calcCompensation(person); // returns array
+    let salary = Number(person.annualSalary);
+    let rating = person.reviewRating;
+    let employeeNo = person.employeeNumber;
+    let bonus = calcBonusPercentage(salary, rating, employeeNo);
+    let bonusTotal = calcBonusTotal(salary, bonus);
+    let compensationTotal = calcTotalCompensation(salary, bonusTotal);
+
     let employeeData = {
       name: person.name,
-      bonusPercentage: employeeValues[0],
-      totalBonus: employeeValues[1],
-      totalCompensation: employeeValues[2],
+      bonusPercentage: bonus,
+      totalBonus: bonusTotal,
+      totalCompensation: compensationTotal,
     };
     employeeArray.push(employeeData);
   }
@@ -62,40 +68,44 @@ function employeeFunc(employee) {
 console.log(employeeFunc(employees));
 
 // functions for calculating compensation
-function calcCompensation(person) {
+function calcBonusPercentage(salary, rating, employeeID) {
   console.log();
   console.log('inside calcBonusPercentage');
   // check reviewRating
-  let annualSalary = Number(person.annualSalary);
-  let bonus = 1;
-  let bonusArray = [];
-  if (person.reviewRating === 3) {
+  let bonus = 0;
+  if (rating === 3) {
     bonus += 0.04;
-  } else if (person.reviewRating === 4) {
+  } else if (rating === 4) {
     bonus += 0.06;
-  } else if (person.reviewRating >= 5) {
+  } else if (rating >= 5) {
     bonus += 0.1;
   }
 
-  if (person.employeeNumber.length) {
+  if (employeeID) {
     bonus += 0.05;
   }
 
-  if (annualSalary > 65000) {
+  if (salary > 65000) {
     bonus -= 0.01;
   }
 
-  if (bonus < 1) {
-    bonus = 1;
-  } else if (bonus >= 1.13) {
-    bonus = 1.13;
+  if (bonus < 0) {
+    bonus = 0;
+  } else if (bonus >= 0.13) {
+    bonus = 0.13;
   }
-  // bonus, totalCompensation, bonusPercentage
-
-  let bonusTotal = parseInt(annualSalary * bonus);
-  let totalComp = parseInt(annualSalary * bonus + annualSalary);
-  bonusArray.push(bonus, bonusTotal, totalComp);
-  return bonusArray;
+  return bonus;
 }
 
+function calcBonusTotal(salary, bonus) {
+  console.log();
+  console.log('inside calcBonusTotal');
+  return salary * bonus;
+}
+
+function calcTotalCompensation(salary, bonusTotal) {
+  console.log();
+  console.log('inside calcBonusTotal');
+  return salary + bonusTotal;
+}
 console.log(employees);
