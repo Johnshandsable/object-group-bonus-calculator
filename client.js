@@ -31,64 +31,6 @@ const employees = [
   },
 ];
 
-function employeeFunc(employee) {
-  console.log('inside employeeFunc.');
-  let employeeArray = [];
-
-  for (const person of employee) {
-    console.log();
-    console.log(person);
-
-    let employeeData = {
-      name: person.name,
-      bonusPercentage: calcBonusPercentage(person),
-      totalBonus: calcTotalBonus(person),
-      totalCompensation: calcTotalCompensation(person),
-    };
-    employeeArray.push(employeeData);
-  }
-  return employeeArray;
-}
-
-console.log(employeeFunc(employees));
-
-function calcBonusPercentage(person) {
-  console.log('inside employeeBonus');
-  // reviewRating
-  let bonus = 1;
-  if (person.reviewRating === 3) {
-    bonus += 0.04;
-  } else if (person.reviewRating === 4) {
-    bonus += 0.06;
-  } else if (person.reviewRating === 5) {
-    bonus += 0.1;
-  }
-
-  if (person.employeeNumber.length) {
-    bonus += 0.05;
-  }
-
-  if (Number(person.annualSalary) > 65000) {
-    bonus -= 0.01;
-  }
-
-  if (bonus < 1 || bonus >= 1.13) {
-    bonus = 1;
-  }
-  return bonus;
-}
-
-// However, if their annual income is greater than $65,000, they should have their bonus adjusted down 1%.
-// - No bonus can be above 13% or below 0% total.
-
-function calcTotalCompensation(person) {
-  // person.annualSalary + person.totalBonus
-}
-
-function calcTotalBonus(person) {
-  // person.bonusPercentage * person.annualSalary
-}
-
 // YOU SHOULD NOT NEED TO CHANGE ANYTHING ABOVE THIS POINT
 
 // Take small steps! Don't write a for loop and two functions that do all of the calculations right away.
@@ -97,5 +39,63 @@ function calcTotalBonus(person) {
 
 // This is not a race. Everyone on your team should understand what is happening.
 // Ask questions when you don't.
+
+function employeeFunc(employee) {
+  console.log('inside employeeFunc.');
+  let employeeArray = [];
+
+  for (const person of employee) {
+    console.log();
+    console.log(person);
+    let employeeValues = calcCompensation(person); // returns array
+    let employeeData = {
+      name: person.name,
+      bonusPercentage: employeeValues[0],
+      totalBonus: employeeValues[1],
+      totalCompensation: employeeValues[2],
+    };
+    employeeArray.push(employeeData);
+  }
+  return employeeArray;
+}
+
+console.log(employeeFunc(employees));
+
+// functions for calculating compensation
+function calcCompensation(person) {
+  console.log();
+  console.log('inside calcBonusPercentage');
+  // check reviewRating
+  let annualSalary = Number(person.annualSalary);
+  let bonus = 1;
+  let bonusArray = [];
+  if (person.reviewRating === 3) {
+    bonus += 0.04;
+  } else if (person.reviewRating === 4) {
+    bonus += 0.06;
+  } else if (person.reviewRating >= 5) {
+    bonus += 0.1;
+  }
+
+  if (person.employeeNumber.length) {
+    bonus += 0.05;
+  }
+
+  if (annualSalary > 65000) {
+    bonus -= 0.01;
+  }
+
+  if (bonus < 1) {
+    bonus = 1;
+  } else if (bonus >= 1.13) {
+    bonus = 1.13;
+  }
+  // bonus, totalCompensation, bonusPercentage
+
+  let bonusTotal = parseInt(annualSalary * bonus);
+  let totalComp = parseInt(annualSalary * bonus + annualSalary);
+  bonusArray.push(bonus, bonusTotal, totalComp);
+  return bonusArray;
+}
 
 console.log(employees);
